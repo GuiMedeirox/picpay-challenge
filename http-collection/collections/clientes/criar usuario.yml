@@ -1,0 +1,23 @@
+info:
+  name: criar usuario
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: http://localhost:8080/api/usuario
+  body:
+    type: json
+    data: |-
+      {
+        "nome": "guilherme", 
+        "senha": "123", 
+        "tipoCliente": "LOJISTA"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
