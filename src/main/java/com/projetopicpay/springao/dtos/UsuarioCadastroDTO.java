@@ -15,13 +15,13 @@ public record UsuarioCadastroDTO(
         String senha,
 
         @Email
-        @NotBlank
+        @NotBlank(message = "o campo email é obrigatorio")
         String email,
 
         @NotNull
         TipoCliente tipoCliente,
 
-        @NotBlank
+        @NotBlank(message = "o campo documento é obrigatorio")
         String documento
 
 ) {
