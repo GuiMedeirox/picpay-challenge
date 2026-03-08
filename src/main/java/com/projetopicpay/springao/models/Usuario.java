@@ -20,7 +20,6 @@ public class Usuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID )
-
     private UUID id;
 
     @Column(nullable = false, length = 70)
@@ -41,5 +40,11 @@ public class Usuario {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private TipoCliente tipoCliente;
+
+
+    @PrePersist
+    void onCreate(){
+        this.saldo = BigDecimal.ZERO;
+    }
 
 }
