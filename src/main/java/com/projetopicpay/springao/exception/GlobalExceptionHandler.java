@@ -24,4 +24,25 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(err);
     }
 
+    @ExceptionHandler(UsuarioInexistente.class)
+    public ResponseEntity<ErroResponse> capturarExceptionUsuarioInexistente(UsuarioInexistente ex){
+        ErroResponse err = new ErroResponse(ex.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(err);
+    }
+
+    @ExceptionHandler(PagadorLojista.class)
+    public ResponseEntity<ErroResponse> capturarExceptionPagadorLojista(PagadorLojista ex){
+        ErroResponse err = new ErroResponse(ex.getMessage());
+        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(err);
+    }
+
+    @ExceptionHandler(SaldoInsuficiente.class)
+    public ResponseEntity<ErroResponse> capturarExceptionSaldoInsuficiente(SaldoInsuficiente ex){
+        ErroResponse err = new ErroResponse(ex.getMessage());
+        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(err);
+    }
+
+
+
+
 }
