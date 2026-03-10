@@ -42,7 +42,11 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(err);
     }
 
-
+    @ExceptionHandler(PagamentoNaoAutorizado.class)
+    public ResponseEntity<ErroResponse> capturarExceptionPagamentoNaoAutorizado(PagamentoNaoAutorizado ex){
+        ErroResponse err = new ErroResponse(ex.getMessage());
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(err);
+    }
 
 
 }

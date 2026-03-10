@@ -48,5 +48,11 @@ public class Transferencia {
     @CreationTimestamp
     private LocalDateTime hora_transacao;
 
+    public Transferencia(Usuario from, Usuario to, BigDecimal quantia, StatusTransferencia status){
+        this.pagador=from;
+        this.recebedor=to;
+        this.quantia=quantia;
+        this.status=status;
+    }
 
 }
