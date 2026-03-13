@@ -26,7 +26,7 @@ public class TransferenciaService
     private final UsuarioRepository usuarioRepository;
     private final TransferenciaRepository transferenciaRepository;
     private final AutorizadorService autorizadorService;
-
+    private final NotificacaoService notificacaoService;
     @Transactional
     public TransferenciaResponseDTO fazerTransferencia(TransferenciaDTO transf){
 
@@ -47,10 +47,6 @@ public class TransferenciaService
 
         boolean status = autorizadorService.autorizar();
 
-        if (!status){
-            throw new PagamentoNaoAutorizado("Servico externo de pagamento negou a transacao");
-        }
-
         recebedor.get().setSaldo(
                 recebedor.get().getSaldo().add(transf.quantia())
         );
@@ -64,6 +60,7 @@ public class TransferenciaService
 
         Transferencia transferencia = new Transferencia(pagador.get(), recebedor.get(), transf.quantia(), StatusTransferencia.CONCLUIDA);
         transferenciaRepository.save(transferencia);
+        notificacaoService.notificar();
 
         return new TransferenciaResponseDTO(transferencia.getId(), pagador.get().getNome(), recebedor.get().getNome(), transf.quantia(), transferencia.getStatus(), transferencia.getHora_transacao());
 

@@ -6,5 +6,5 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-public record TransferenciaResponseDTO(UUID uuid, String de, String para, BigDecimal quantia, StatusTransferencia status, LocalDateTime hora) {
+public record TransferenciaResponseDTO(UUID uuid, String de, String para, BigDecimal quantia, StatusTransferencia status, LocalDateTime hora_transacao) {
 }
