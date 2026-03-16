@@ -1,0 +1,48 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum TipoCliente {
+  CLIENTE
+  LOJISTA
+}
+
+enum StatusTransferencia {
+  PENDENTE
+  CONCLUIDA
+  ERRO
+}
+
+model Usuario {
+  id          String      @id @default(uuid())
+  nome        String      @db.VarChar(70)
+  documento   String      @unique @db.VarChar(14)
+  email       String      @unique @db.VarChar(70)
+  senha       String
+  saldo       Decimal     @default(0) @db.Decimal(10, 2)
+  tipoCliente TipoCliente
+
+  transferenciasEnviadas   Transferencia[] @relation("Pagador")
+  transferenciasRecebidas  Transferencia[] @relation("Recebedor")
+
+  @@map("tb_usuario")
+}
+
+model Transferencia {
+  id             String              @id @default(uuid())
+  pagadorId      String
+  recebedorId    String
+  quantia        Decimal             @db.Decimal(10, 2)
+  status         StatusTransferencia
+  horaTransacao  DateTime            @default(now())
+
+  pagador    Usuario @relation("Pagador", fields: [pagadorId], references: [id])
+  recebedor  Usuario @relation("Recebedor", fields: [recebedorId], references: [id])
+
+  @@map("tb_transferencia")
+}
